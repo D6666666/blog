@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 import markdown
 # Create your views here.
-from.models import Post
+from.models import Post,Category
 from django.http import HttpResponse
 
 def index(request):
@@ -22,4 +22,10 @@ def archives(request, year, month):
     post_list = Post.objects.filter(created_time__year=year,
                                     created_time__month=month
                                     ).order_by('-created_time')
+    return render(request, 'index.html', context={'post_list': post_list})
+
+def category(request, pk):
+    # 记得在开始部分导入 Category 类
+    cate = get_object_or_404(Category, pk=pk)
+    post_list = Post.objects.filter(category=cate).order_by('-created_time')
     return render(request, 'index.html', context={'post_list': post_list})
