@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from blogs.feeds import AllPostsRssFeed
 from django.contrib import admin
 
 
@@ -21,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('blogs.urls')),
     url(r'', include('comments.urls')),
+    url(r'^all/rss/$', AllPostsRssFeed(), name='rss'),
 ]
